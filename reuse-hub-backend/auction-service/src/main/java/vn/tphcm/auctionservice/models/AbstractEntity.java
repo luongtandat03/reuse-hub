@@ -1,28 +1,14 @@
+/*
+ * @ (#) AbstractEntityr.java       1.0     1/20/2026
+ *
+ * Copyright (c) 2026. All rights reserved.
+ */
+
 package vn.tphcm.auctionservice.models;
+/*
+ * @author: Luong Tan Dat
+ * @date: 1/20/2026
+ */
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-@Getter
-@Setter
-@MappedSuperclass
-public abstract class AbstractEntity<T extends Serializable> implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false, nullable = false)
-    private T id;
-
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+public class AbstractEntityr {
 }
