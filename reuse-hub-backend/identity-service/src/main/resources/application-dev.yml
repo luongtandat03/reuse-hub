@@ -69,11 +69,5 @@ app:
   frontend:
     url: http://localhost:5173
 
-cloudinary:
-  cloud:
-    name: dm6olod4x
-    api-key: 971329371956998
-    api-secret: cUdGvmu9_UlrOzHx_cMfxQGVwKg
-
 avatar:
   default: https://i.ibb.co/mrL8wYRs/default.jpg

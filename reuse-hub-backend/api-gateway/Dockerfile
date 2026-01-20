@@ -1,12 +1,12 @@
-FROM maven:3.9-eclipse-temurin-17-alpine AS build
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
 WORKDIR /app
 COPY pom.xml .
-RUN mvn dependency:go-offline -B || mvn dependency:go-offline -B || true
+RUN mvn dependency:go-offline
 COPY src ./src
-RUN mvn clean package -DskipTests -Dmaven.wagon.http.retryHandler.count=3
+RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:17-jdk-alpine
-VOLUME /tmp
-EXPOSE 8080
+FROM eclipse-temurin:17-jre-alpine
+VOLUME /app
 COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app.jar"]
