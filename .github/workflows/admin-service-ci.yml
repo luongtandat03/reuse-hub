@@ -1,0 +1,47 @@
+name: Continuous Integration Pipeline (Maven Build, Test, Package, Docker)
+run-name: ${{ github.actor }}
+
+on:
+  push:
+    branches: ["main"]
+    paths: 
+      - 'admin-service/**'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up JDK 17 
+        uses: actions/setup-java@v3
+        with: 
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Tests (Unit Test & Integration Test)
+        uses: mvn Test
+      
+      - name: Build with Maven
+        uses: mvn package -DskipTests
+        working-directory: ./admin-service
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-docker@v4
+        with: 
+          username: ${{ secrets.DOCKERHUB_USERNAME }} 
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and Push Docker Image 
+        uses: docker/build-push-action@v7
+        with: 
+          context: ./admin-service
+          push: true
+          file: ./Dockerfile
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/admin-service:${{ github.sha }}
