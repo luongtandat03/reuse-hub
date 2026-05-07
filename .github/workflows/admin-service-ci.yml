@@ -23,25 +23,26 @@ jobs:
           cache: maven
 
       - name: Run Tests (Unit Test & Integration Test)
-        uses: mvn Test
+        run: mvn test
+        working-directory: ./reuse-hub-backend/admin-service
       
       - name: Build with Maven
-        uses: mvn package -DskipTests
+        run: mvn package -DskipTests
         working-directory: ./reuse-hub-backend/admin-service
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
       - name: Login to Docker Hub
-        uses: docker/login-docker@v4
+        uses: docker/login-action@v3
         with: 
           username: ${{ secrets.DOCKERHUB_USERNAME }} 
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Build and Push Docker Image 
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v6
         with: 
           context: ./reuse-hub-backend/admin-service
+          file: ./reuse-hub-backend/admin-service/Dockerfile
           push: true
-          file: ./Dockerfile
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/admin-service:${{ github.sha }}
