@@ -32,9 +32,6 @@ public class AdminController {
                                                          @RequestParam(defaultValue = "createdAt") String sortBy,
                                                          @RequestParam(defaultValue = "desc") String sortDirection){
         
-        log.info("AdminController - getAllUsers: Received request to fetch all transactions with pageNo={}, pageSize={}, sortBy={}, sortDirection={}",
-                pageNo, pageSize, sortBy, sortDirection);
-
         return adminService.getAllUsers(pageNo, pageSize, sortBy, sortDirection);
     }
 
