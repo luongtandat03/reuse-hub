@@ -1,0 +1,72 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: ${DATABASE_URL_AUCTION:jdbc:postgresql://localhost:5432/auction}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+    template:
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: manual # publisher-returns: message unacknowledged
+        concurrency: 2 # many consumers for one queue
+        max-concurrency: 10 # max number of consumers for one queue
+        prefetch: 5 # number of messages to prefetch
+        shutdown-timeout: 10s
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 1000ms
+          max-interval: 10000ms
+          multiplier: 2.0
+        default-requeue-rejected: false # if false, message will be sent to dead-letter queue
+
+rabbitmq:
+  exchanges:
+    bid-exchange: ex.bid
+    notification-exchange: ex.notification
+  queues:
+    notification-queue: q.notification
+  routing-keys:
+    notification: r.notification.send
+
+feign:
+  client:
+    config:
+      item-service:
+       url: ${ITEM_SERVICE_URL:http://localhost:8083}/item-feign
+
+websocket:
+  allow-origin: "*"
+  endpoint: /ws
+  destination-prefix: /topic,/queue
+  application-prefix: /app
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+openapi:
+  service:
+    api-docs: reuse-hub-api-docs
+    server: ${BACKEND_SERVICE:http://localhost:${server.port}}
+    title: reuse-hub
+    version: 1.0.0

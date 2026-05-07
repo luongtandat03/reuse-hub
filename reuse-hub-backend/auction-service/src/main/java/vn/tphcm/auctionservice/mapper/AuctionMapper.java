@@ -5,9 +5,17 @@
  */
 
 package vn.tphcm.auctionservice.mapper;
+
 /*
-  * @author: Luong Tan Dat
-  * @date: 1/27/2026
+ * @author: Luong Tan Dat
+ * @date: 1/27/2026
  */
+
+import org.mapstruct.Mapper;
+import vn.tphcm.auctionservice.dtos.response.AuctionResponse;
+import vn.tphcm.auctionservice.models.Auction;
+
+@Mapper(componentModel = "spring")
 public interface AuctionMapper {
+    AuctionResponse toAuctionResponse(Auction auction);
 }

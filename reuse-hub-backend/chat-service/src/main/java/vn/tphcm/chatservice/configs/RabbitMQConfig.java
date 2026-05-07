@@ -47,9 +47,6 @@ public class RabbitMQConfig {
         return new TopicExchange(notificationExchange, true, false);
     }
 
-
-
-
     @Bean
     public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
         log.info("Initializing Jackson2JsonMessageConverter for RabbitMQ");

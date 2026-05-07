@@ -63,7 +63,6 @@ public class CacheServiceImpl implements CacheService {
         } catch (Exception e) {
             log.error("Failed to get cached item {}: {}", itemId, e.getMessage());
         }
-
         return null;
     }
 

@@ -14,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import vn.tphcm.adminservice.dto.ApiResponse;
-import vn.tphcm.adminservice.dto.response.*;
+import vn.tphcm.adminservice.dto.response.DashboardItemResponse;
+import vn.tphcm.adminservice.dto.response.DashboardTransactionResponse;
+import vn.tphcm.adminservice.dto.response.DashboardUserResponse;
 import vn.tphcm.adminservice.services.AdminService;
 
 @RestController
@@ -26,14 +28,9 @@ public class AdminController {
 
     @GetMapping("/users")
     public ApiResponse<DashboardUserResponse> getAllUser(@RequestParam(defaultValue = "0") int pageNo,
-                                                                  @RequestParam(defaultValue = "10") int pageSize,
-                                                                  @RequestParam(defaultValue = "createdAt") String sortBy,
-                                                                  @RequestParam(defaultValue = "desc") String sortDirection) {
-        log.info("AdminController - getAllUser: Received request to fetch all users with pageNo={}, pageSize={}, sortBy={}, sortDirection={}",
-                pageNo, pageSize, sortBy, sortDirection);
-
-
-
+                                                         @RequestParam(defaultValue = "10") int pageSize,
+                                                         @RequestParam(defaultValue = "createdAt") String sortBy,
+                                                         @RequestParam(defaultValue = "desc") String sortDirection){
         return adminService.getAllUsers(pageNo, pageSize, sortBy, sortDirection);
     }
 

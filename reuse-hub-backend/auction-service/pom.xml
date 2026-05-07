@@ -124,6 +124,13 @@
             <artifactId>mapstruct</artifactId>
             <version>1.6.3</version>
         </dependency>
+
+        <!-- OpenFeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

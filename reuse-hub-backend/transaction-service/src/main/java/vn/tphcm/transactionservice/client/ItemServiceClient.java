@@ -26,7 +26,4 @@ import vn.tphcm.transactionservice.dtos.response.ItemResponse;
 public interface ItemServiceClient {
     @GetMapping(value = "/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ApiResponse<ItemResponse> getItemById(@PathVariable String itemId);
-
-    @PutMapping(value = "/{itemId}/status", produces = MediaType.APPLICATION_JSON_VALUE)
-    ApiResponse<ItemResponse> updateItemStatus(@PathVariable String itemId, @RequestParam ItemStatus status);
 }

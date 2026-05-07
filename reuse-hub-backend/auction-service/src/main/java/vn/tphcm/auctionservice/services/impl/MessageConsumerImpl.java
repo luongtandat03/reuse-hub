@@ -5,10 +5,10 @@
  */
 
 package vn.tphcm.auctionservice.services.impl;
- /*
-  * @author: Luong Tan Dat
-  * @date: 2/10/2026
+/*
+ * @author: Luong Tan Dat
+ * @date: 2/10/2026
  */
- 
+
 public class MessageConsumerImpl {
 }

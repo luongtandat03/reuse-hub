@@ -12,18 +12,8 @@ package vn.tphcm.chatservice.commons;
 
 public enum MessageType {
     TEXT,
-    IMAGE,
-    VIDEO,
-    AUDIO,
-    FILE,
-    EMOJI,
-    LOCATION,
-    CONTACT,
-    STICKER,
-    GIF,
-    // Price negotiation types
-    PRICE_OFFER,      // Buyer sends a price offer
-    OFFER_ACCEPTED,   // Seller accepts the offer
-    OFFER_REJECTED,   // Seller rejects the offer
-    OFFER_COUNTERED   // Seller counters with a different price
+    PRICE_OFFER,
+    OFFER_ACCEPTED,
+    OFFER_REJECTED,
+    OFFER_COUNTERED
 }

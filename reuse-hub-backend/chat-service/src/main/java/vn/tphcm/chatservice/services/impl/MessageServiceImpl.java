@@ -56,18 +56,15 @@ public class MessageServiceImpl implements MessageService {
             request.getSenderId(), request.getRecipientId(), request.getConversationId());
 
         Conversation conversation;
-        
-        // If conversationId is provided, use it directly
+
         if (request.getConversationId() != null && !request.getConversationId().isBlank()) {
             conversation = conversationRepository.findById(request.getConversationId())
                 .orElseThrow(() -> new ResourceNotFoundException("Conversation not found: " + request.getConversationId()));
-            
-            // Verify sender is a participant
+
             if (!conversation.getParticipantIds().contains(request.getSenderId())) {
                 throw new InvalidDataException("User is not a participant of this conversation");
             }
         } else {
-            // Fallback to finding by participants
             List<Conversation> conversations = conversationRepository
                     .findByParticipantIds(request.getSenderId(), request.getRecipientId());
             
@@ -88,7 +85,6 @@ public class MessageServiceImpl implements MessageService {
             }
         }
 
-        // Build message with offer fields if applicable
         Message.MessageBuilder messageBuilder = Message.builder()
                 .conversationId(conversation.getId())
                 .senderId(request.getSenderId())
@@ -97,7 +93,6 @@ public class MessageServiceImpl implements MessageService {
                 .type(messageType)
                 .status(MessageStatus.SENT);
 
-        // Handle price offer messages
         if (isPriceOfferType(messageType)) {
             log.info("Price offer message - offerPrice: {}, itemId: {}, originalPrice: {}", 
                 request.getOfferPrice(), request.getItemId(), request.getOriginalPrice());
@@ -109,12 +104,10 @@ public class MessageServiceImpl implements MessageService {
                 .originalPrice(request.getOriginalPrice())
                 .relatedOfferId(request.getRelatedOfferId());
 
-            // Set offer status based on message type
             if (messageType == MessageType.PRICE_OFFER || messageType == MessageType.OFFER_COUNTERED) {
                 messageBuilder.offerStatus("PENDING");
             } else if (messageType == MessageType.OFFER_ACCEPTED) {
                 messageBuilder.offerStatus("ACCEPTED");
-                // Update original offer status if relatedOfferId is provided
                 updateOriginalOfferStatus(request.getRelatedOfferId(), "ACCEPTED");
             } else if (messageType == MessageType.OFFER_REJECTED) {
                 messageBuilder.offerStatus("REJECTED");
@@ -130,7 +123,6 @@ public class MessageServiceImpl implements MessageService {
         conversation.setLastMessageTimestamp(Instant.now());
         conversationRepository.save(conversation);
 
-        // Build notification
         String notificationTitle = getNotificationTitle(messageType);
         String notificationContent = getNotificationContent(request, messageType);
 
