@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-service
+  namespace: reuse-hub
+  labels:
+    app: chat-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-service
+  template:
+    metadata:
+      labels:
+        app: chat-service
+    spec:
+      containers:
+        - name: chat-service
+          image:  luongtandat512/chat-service:latest
+          ports:
+            - containerPort: 8086
+          envFrom:
+            - configMapRef:
+                name: reuse-hub-config
+            - secretRef:
+                name: reuse-hub-secret
+          env:
+            - name: USERNAME_MONGODB
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: MONGODB_USERNAME_CHAT
+            - name: PASSWORD_MONGODB
+              valueFrom:
+                secretKeyRef:
+                  name: reuse-hub-secret
+                  key: MONGODB_PASSWORD_CHAT
+            - name: BACKEND_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: BACKEND_SERVICE_CHAT
+          resources:
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-service
+  namespace: reuse-hub
+spec:
+  selector:
+    app: chat-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8086
+      targetPort: 8086

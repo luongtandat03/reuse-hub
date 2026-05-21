@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  namespace: reuse-hub
+  labels:
+    app: payment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+    spec:
+      containers:
+        - name: payment-service
+          image: luongtandat512/payment-service:latest
+          ports:
+            - containerPort: 8085
+          envFrom:
+            - configMapRef:
+                name: reuse-hub-config
+            - secretRef:
+                name: reuse-hub-secret
+          env:
+            - name: DATABASE_URL_PAYMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: DATABASE_URL_PAYMENT
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: DATABASE_USERNAME
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: reuse-hub-secret
+                  key: DATABASE_PASSWORD
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: reuse-hub-secret
+                  key: STRIPE_SECRET_KEY
+            - name: STRIPE_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: reuse-hub-secret
+                  key: STRIPE_WEBHOOK_SECRET
+            - name: BACKEND_SERVICE_PAYMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: BACKEND_SERVICE_PAYMENT
+          resources:
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  namespace: reuse-hub
+spec:
+  selector:
+    app: payment-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8085
+      targetPort: 8085

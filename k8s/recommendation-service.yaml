@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendation-service
+  namespace: reuse-hub
+  labels:
+    app: recommendation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendation-service
+  template:
+    metadata:
+      labels:
+        app: recommendation-service
+    spec:
+      containers:
+        - name: recommendation-service
+          image: luongtandat512/recommendation-service:latest
+          ports:
+            - containerPort: 8082
+          envFrom:  
+            - configMapRef:
+                name: reuse-hub-config
+            - secretRef:
+                name: reuse-hub-secret
+          env:
+            - name: DATABASE_URL_RECOMMENDATION
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: DATABASE_URL_PROFILE
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: DATABASE_USERNAME
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: reuse-hub-secret
+                  key: DATABASE_PASSWORD
+            - name: BACKEND_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: BACKEND_SERVICE_PROFILE
+          resources:
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: profile-service
+  namespace: reuse-hub
+spec:
+  selector:
+    app: profile-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8082
+      targetPort: 8082

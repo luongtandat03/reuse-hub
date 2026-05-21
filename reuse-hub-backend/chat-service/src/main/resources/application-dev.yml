@@ -5,7 +5,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb+srv://${USERNAME_MONGODB_CHAT:username}:${PASSWORD_MONGODB_CHAT:ljAluvRtFZxPfAa7}@chat.5aber6f.mongodb.net/?retryWrites=true&w=majority&appName=chat
+      uri: mongodb+srv://${USERNAME_MONGODB_CHAT}:${PASSWORD_MONGODB_CHAT}@chat.5aber6f.mongodb.net/?retryWrites=true&w=majority&appName=chat
       database: chat
 
   jackson:

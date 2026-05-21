@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service
+  namespace: reuse-hub
+  labels:
+    app: admin-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: admin-service
+  template:
+    metadata:
+      labels:
+        app: admin-service
+    spec:
+      containers:
+        - name: admin-service
+          image: luongtandat512/admin-service:latest
+          ports:
+            - containerPort: 8090
+          envFrom:
+            - configMapRef:
+                name: reuse-hub-config
+            - secretRef:
+                name: reuse-hub-secret
+          env:
+            - name: BACKEND_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: BACKEND_SERVICE_ADMIN
+          resources:
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+  namespace: reuse-hub
+spec:
+  selector:
+    app: admin-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8090
+      targetPort: 8090

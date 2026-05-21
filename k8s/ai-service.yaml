@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-service
+  namespace: reuse-hub
+  labels:
+    app: ai-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-service
+  template:
+    metadata:
+      labels:
+        app: ai-service
+    spec:
+      containers:
+        - name: ai-service
+          image: luongtandat512/ai-service:latest
+          ports:
+            - containerPort: 8089
+          envFrom:
+            - configMapRef:
+                name: reuse-hub-config
+            - secretRef:
+                name: reuse-hub-secret
+          env:
+            - name: BACKEND_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: BACKEND_SERVICE_AI
+            - name: GOOGLE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: reuse-hub-secret
+                  key: GOOGLE_API_KEY
+          resources:
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-service
+  namespace: reuse-hub
+spec:
+  selector:
+    app: ai-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8089
+      targetPort: 8089

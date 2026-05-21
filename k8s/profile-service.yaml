@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-service
+  namespace: reuse-hub
+  labels:
+    app: profile-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profile-service
+  template:
+    metadata:
+      labels:
+        app: profile-service
+    spec:
+      containers:
+        - name: profile-service
+          image: luongtandat512/profile-service:latest
+          ports:
+            - containerPort: 8082
+          envFrom:
+            - configMapRef:
+                name: reuse-hub-config
+            - secretRef:
+                name: reuse-hub-secret
+          env:
+            - name: DATABASE_URL_PROFILE
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: DATABASE_URL_PROFILE
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: DATABASE_USERNAME
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: reuse-hub-secret
+                  key: DATABASE_PASSWORD
+            - name: BACKEND_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: BACKEND_SERVICE_PROFILE
+          resources:
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: profile-service
+  namespace: reuse-hub
+spec:
+  selector:
+    app: profile-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8082
+      targetPort: 8082

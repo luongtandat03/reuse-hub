@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: reuse-hub
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secret.yaml
+  - rabbitmq.yaml
+  - postgres.yaml
+  - redis.yaml
+  - discovery-service.yaml
+  - api-gateway.yaml
+  - identity-service.yaml
+  - profile-service.yaml
+  - item-service.yaml
+  - transaction-service.yaml
+  - payment-service.yaml
+  - chat-service.yaml
+  - notification-service.yaml
+  - ai-service.yaml
+  - admin-service.yaml
+  - auction-service.yaml
+  - moderation-service.yaml
+  - frontend-web.yaml
+  - ingress.yaml
+
+configMapGenerator:
+  - name: postgres-init-scripts
+    namespace: reuse-hub
+    files:
+      - ../resource/db-init/01-create-databases.sql
+      - ../resource/db-init/02-identity-seed.sql
+      - ../resource/db-init/03-profile-init.sql
+      - ../resource/db-init/04-item-init.sql

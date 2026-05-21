@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auction-service
+  namespace: reuse-hub
+  labels:
+    app: auction-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auction-service
+  template:
+    metadata:
+      labels:
+        app: auction-service
+    spec:
+      containers:
+        - name: auction-service
+          image: luongtandat512/auction-service:latest
+          ports:
+            - containerPort: 8092
+          envFrom:
+            - configMapRef:
+                name: reuse-hub-config
+          env:
+            - name: DATABASE_URL_AUCTION
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: DATABASE_URL_AUCTION
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: DATABASE_USERNAME
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: reuse-hub-secret
+                  key: DATABASE_PASSWORD
+            - name: BACKEND_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: BACKEND_SERVICE_AUCTION
+          resources:
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auction-service
+  namespace: reuse-hub
+spec:
+  selector:
+    app: auction-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8092
+      targetPort: 8092

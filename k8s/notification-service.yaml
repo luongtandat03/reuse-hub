@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: reuse-hub
+  labels:
+    app: notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - name: notification-service
+          image: luongtandat512/notification-service:latest
+          ports:
+            - containerPort: 8087
+          envFrom:
+            - configMapRef:
+                name: reuse-hub-config
+            - secretRef:
+                name: reuse-hub-secret
+          env:
+            - name: USERNAME_MONGODB
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: MONGODB_USERNAME_NOTIFICATION
+            - name: PASSWORD_MONGODB
+              valueFrom:
+                secretKeyRef:
+                  name: reuse-hub-secret
+                  key: MONGODB_PASSWORD_NOTIFICATION
+            - name: BACKEND_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: BACKEND_SERVICE_NOTIFICATION
+          resources:
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: reuse-hub
+spec:
+  selector:
+    app: notification-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8087
+      targetPort: 8087

@@ -5,7 +5,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb+srv://${MONGODB_USERNAME_NOTIFICATION:username}:${MONGODB_PASSWORD_NOTIFICATION:kTb9kz3920NL7ujc}@notification.r5yjzv0.mongodb.net/?appName=notification
+      uri: mongodb+srv://${MONGODB_USERNAME_NOTIFICATION}:${MONGODB_PASSWORD_NOTIFICATION}@notification.r5yjzv0.mongodb.net/?appName=notification
       database: notification
 
   jackson:

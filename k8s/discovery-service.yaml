@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-service
+  namespace: reuse-hub
+  labels:
+    app: discovery-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discovery-service
+  template:
+    metadata:
+      labels:
+        app: discovery-service
+    spec:
+      containers:
+        - name: discovery-service
+          image: luongtandat512/discovery-service:latest
+          ports:
+            - containerPort: 8761
+          envFrom:
+            - configMapRef:
+                name: reuse-hub-config
+          env:
+            - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: reuse-hub-config
+                  key: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE  
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8761
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: discovery-service
+  namespace: reuse-hub
+spec:
+  selector:
+    app: discovery-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8761
+      targetPort: 8761
