@@ -5,8 +5,8 @@ spring:
 
   datasource:
     url: ${DATABASE_URL_TRANSACTION:jdbc:postgresql://localhost:5432/transaction}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: none

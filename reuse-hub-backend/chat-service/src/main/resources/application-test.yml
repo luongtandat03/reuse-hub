@@ -12,6 +12,67 @@ spring:
       hibernate:
         format_sql: true
 
+websocket:
+  user-destination-prefix: dummy_value
+rabbitmq:
+  routing-keys:
+    message: dummy_value
+websocket:
+  allow-origin: dummy_value
+file.upload:
+  max-images: dummy_value
+rabbitmq:
+  routing-keys:
+    notification: dummy_value
+openapi.service:
+  title: dummy_value
+file.upload:
+  allowed-types: dummy_value
+  image:
+    compress-quality: dummy_value
+file.upload:
+  max-size: dummy_value
+openapi.service:
+  server: dummy_value
+supabase:
+  url: dummy_value
+websocket:
+  destination-prefix: dummy_value
+websocket:
+  application-prefix: dummy_value
+rabbitmq:
+  exchange:
+    chat: dummy_value
+openapi:
+  service:
+    version: dummy_value
+rabbitmq:
+  exchange:
+    notification: dummy_value
+supabase:
+  service-key: dummy_value
+supabase:
+  public-url: dummy_value
+supabase:
+  bucket: dummy_value
+file:
+  upload:
+    image:
+      max-height: dummy_value
+openapi:
+  service:
+    api-docs: dummy_value
+file:
+  upload:
+    image:
+      max-width: dummy_value
+file:
+  upload:
+    image:
+      thumbnail-size: dummy_value
+websocket:
+  endpoint: dummy_value
+
 springdoc:
   api-docs:
     enabled: true

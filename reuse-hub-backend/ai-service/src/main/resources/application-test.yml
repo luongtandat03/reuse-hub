@@ -12,6 +12,15 @@ spring:
       hibernate:
         format_sql: true
 
+rabbitmq:
+  queue:
+    ai-scan: q.saga.ai-scan.test
+
+google:
+  ai:
+    api-key: "test-api-key"
+    model: "test-model"
+
 springdoc:
   api-docs:
     enabled: true

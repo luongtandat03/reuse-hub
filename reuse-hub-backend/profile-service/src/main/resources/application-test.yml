@@ -17,6 +17,34 @@ spring:
     username: sa
     password: ""
 
+
+
+supabase:
+  url: dummy_value_for_test_only
+  service-key: dummy_value_for_test_only
+  bucket: dummy_value_for_test_only
+  public-url: dummy_value_for_test_only
+
+file:
+  upload:
+    max-size: 50
+    allowed-types: image/jpeg,image/png,image/gif,image/webp
+    max-images: 10
+    image:
+      max-width: 1920
+      max-height: 1080
+      thumbnail-size: 300
+      compress-quality: 0.8
+
+avatar:
+  default: dummy_value_for_test_only
+
+rabbitmq:
+  queues:
+    user-profile-creation: q.profile.create
+    wallet:
+      credit: q.wallet.credit
+
 springdoc:
   api-docs:
     enabled: true

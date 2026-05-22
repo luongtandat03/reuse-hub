@@ -17,6 +17,44 @@ spring:
     username: sa
     password: ""
 
+
+rabbitmq:
+  exchanges:
+    transaction-exchange: ex.transaction
+    notification-exchange: ex.notification
+    saga: ex.saga
+  queues:
+    saga:
+      transaction-update-reserved: q.saga.transaction-update-reserved-queue
+      transaction-update-failed: q.saga.transaction-update-failed-queue
+    payment:
+      transaction-payment: q.saga.payment-completed
+  routing-keys:
+    transaction:
+      created: r.transaction.created
+      updated: r.transaction.updated
+      cancelled: r.transaction.canceled
+      completed: r.transaction.completed
+      status-updated: r.transaction.status-updated
+    notification: r.notification.send
+    saga:
+      item-reserved: r.item-reserved
+      item-reservation-failed: r.item-reservation-failed
+      feedback:
+        submitted: r.feedback.submitted
+    payment:
+      completed: r.saga.payment-completed
+      failed: r.saga.payment-failed
+    wallet:
+      credit: r.wallet.credit
+
+feign:
+  client:
+    config:
+      item-service:
+        url: ${ITEM_SERVICE_URL:http://localhost:8083}/item-feign
+
+
 springdoc:
   api-docs:
     enabled: true

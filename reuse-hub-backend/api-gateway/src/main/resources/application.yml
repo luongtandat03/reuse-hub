@@ -7,8 +7,6 @@ app:
 spring:
   application:
     name: api-gateway
-  profiles:
-    active: @spring.profiles.active@
   cloud:
     gateway:
       globalcors:

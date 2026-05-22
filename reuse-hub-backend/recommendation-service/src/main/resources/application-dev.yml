@@ -6,8 +6,8 @@ spring:
   neo4j:
     uri: ${NEO4J_URI:bolt://localhost:7687}
     authentication:
-      username: ${NEO4J_USERNAME:neo4j}
-      password: ${NEO4J_PASSWORD:12345678}
+      username: ${NEO4J_USERNAME}
+      password: ${NEO4J_PASSWORD}
 
   rabbitmq:
     host: localhost

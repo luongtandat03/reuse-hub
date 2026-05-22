@@ -16,22 +16,20 @@ import vn.tphcm.adminservice.dto.PageResponse;
 import vn.tphcm.adminservice.dto.response.InfoUserResponse;
 import vn.tphcm.adminservice.dto.response.UserStatisticsResponse;
 
-import java.util.Map;
-
 /*
  * @author: Luong Tan Dat
  * @date: 11/24/2025
  */
 
-@FeignClient(name = "identity-service", url = "${feign.client.config.identity-service.url}",
-        configuration = {AuthenticationRequestInterceptor.class})
+@FeignClient(name = "identity-service", url = "${feign.client.config.identity-service.url}", configuration = {
+        AuthenticationRequestInterceptor.class })
 public interface UserClient {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ApiResponse<PageResponse<InfoUserResponse>> getAllUsers(@RequestParam(defaultValue = "0") int pageNo,
-                                                            @RequestParam(defaultValue = "10") int pageSize,
-                                                            @RequestParam(defaultValue = "createdAt") String sortBy,
-                                                            @RequestParam(defaultValue = "desc") String sortDirection);
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDirection);
 
     @GetMapping(value = "/statistics", produces = MediaType.APPLICATION_JSON_VALUE)
     ApiResponse<UserStatisticsResponse> getUserStatistics();

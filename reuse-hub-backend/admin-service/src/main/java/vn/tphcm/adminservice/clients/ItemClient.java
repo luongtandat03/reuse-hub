@@ -22,23 +22,20 @@ import vn.tphcm.adminservice.dto.PageResponse;
 import vn.tphcm.adminservice.dto.response.ItemResponse;
 import vn.tphcm.adminservice.dto.response.ItemStatisticsResponse;
 
-import java.util.Map;
-
-@FeignClient(name = "item-service", url = "${feign.client.config.item-service.url}",
-        configuration = {AuthenticationRequestInterceptor.class})
+@FeignClient(name = "item-service", url = "${feign.client.config.item-service.url}", configuration = {
+                AuthenticationRequestInterceptor.class })
 public interface ItemClient {
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    ApiResponse<PageResponse<ItemResponse>> getAllItems(@RequestParam(defaultValue = "0") int pageNo,
-                                                        @RequestParam(defaultValue = "10") int pageSize,
-                                                        @RequestParam(defaultValue = "createdAt") String sortBy,
-                                                        @RequestParam(defaultValue = "desc") String sortDirection,
-                                                        @RequestParam(required = false) String filter,
-                                                        @RequestParam(required = false) String categorySlug);
+        @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+        ApiResponse<PageResponse<ItemResponse>> getAllItems(@RequestParam(defaultValue = "0") int pageNo,
+                        @RequestParam(defaultValue = "10") int pageSize,
+                        @RequestParam(defaultValue = "createdAt") String sortBy,
+                        @RequestParam(defaultValue = "desc") String sortDirection,
+                        @RequestParam(required = false) String filter,
+                        @RequestParam(required = false) String categorySlug);
 
-    @GetMapping("/statistics")
-    ApiResponse<ItemStatisticsResponse> getItemStatistics();
+        @GetMapping("/statistics")
+        ApiResponse<ItemStatisticsResponse> getItemStatistics();
 
-    @DeleteMapping("/{itemId}")
-    ApiResponse<Void> deleteItem(@PathVariable String itemId);
+        @DeleteMapping("/{itemId}")
+        ApiResponse<Void> deleteItem(@PathVariable String itemId);
 }
-

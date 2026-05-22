@@ -2,15 +2,25 @@ spring:
   config:
     activate:
       on-profile: test
+rabbitmq:
+  exchange:
+    item: ex.item
+    transaction: ex.transaction
+  routing-key:
+    item:
+      viewed: r.item.viewed
+      liked: r.item.liked
+    transaction:
+      completed: r.transaction.completed
+  queue:
+    recommendation:
+      events: q.recommendation.events
 
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
+neo4j:
+  uri: bolt://localhost:7687
+  authentication:
+    username: neo4j
+    password: 12345678
 
 springdoc:
   api-docs:

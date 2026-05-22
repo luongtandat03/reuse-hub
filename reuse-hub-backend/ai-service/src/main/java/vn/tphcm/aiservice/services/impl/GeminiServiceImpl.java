@@ -21,7 +21,6 @@ import vn.tphcm.aiservice.services.GeminiService;
 
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URL;
 import java.util.*;
 
 @Service
@@ -41,21 +40,24 @@ public class GeminiServiceImpl implements GeminiService {
         log.info("Generating tags for image: {}", imageUrl);
         try {
             String base64Image = downloadAndEncodeImage(imageUrl);
-            if (base64Image == null) return new ArrayList<>();
+            if (base64Image == null)
+                return new ArrayList<>();
 
             Map<String, Object> requestBody = getStringObjectMap(base64Image);
 
-            String url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
+            String url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key="
+                    + apiKey;
 
             Map<String, Object> response = restClient.post()
                     .uri(url)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(requestBody)
                     .retrieve()
-                    .body(new ParameterizedTypeReference<>() {});
+                    .body(new ParameterizedTypeReference<>() {
+                    });
 
             return parseGeminiResponse(response);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error("Error generating tags: {}", ex.getMessage());
             return new ArrayList<>();
         }
@@ -65,16 +67,12 @@ public class GeminiServiceImpl implements GeminiService {
         String prompt = "List 5 Vietnamese keywords describing the object in this image, comma separated, lowercase, different on the subject, no explanation.";
 
         return Map.of(
-            "contents", List.of(
-                Map.of("parts", List.of(
-                    Map.of("text", prompt),
-                    Map.of("inline_data", Map.of(
-                        "mime_type", "image/jpeg",
-                        "data", base64Image
-                    ))
-                ))
-            )
-        );
+                "contents", List.of(
+                        Map.of("parts", List.of(
+                                Map.of("text", prompt),
+                                Map.of("inline_data", Map.of(
+                                        "mime_type", "image/jpeg",
+                                        "data", base64Image))))));
     }
 
     private String downloadAndEncodeImage(String imageUrl) {

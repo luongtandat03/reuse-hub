@@ -17,6 +17,26 @@ spring:
     username: sa
     password: ""
     
+websocket:
+  user-destination-prefix: dummy_value
+  allow-origin: dummy_value
+  application-prefix: dummy_value
+  destination-prefix: dummy_value
+rabbitmq:
+  exchanges:
+    bid-exchange: dummy_value
+  routing-keys:
+    notification: dummy_value
+  exchanges:
+    notification-exchange: dummy_value
+  queues:
+    notification-queue: dummy_value
+openapi:
+  service:
+    api-docs: dummy_value
+websocket:
+  endpoint: dummy_value
+
 springdoc:
   api-docs:
     enabled: true

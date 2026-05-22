@@ -17,6 +17,30 @@ spring:
     username: sa
     password: ""
 
+
+stripe:
+  api:
+    key: dummy_value_for_test_only
+  webhook:
+    secret: dummy_value_for_test_only
+
+rabbitmq:
+  exchange:
+    notification: ex.notification
+    saga: ex.saga
+  routing-key:
+    saga:
+      payment-completed: r.saga.payment-completed
+      payment-failed: r.saga.payment-failed
+    notification: r.notification.send
+    transaction: r.transaction.cancelled
+  queue:
+    saga:
+      payment-refund: q.saga.payment-refund
+      payment-completed: q.saga.payment-completed
+      payment-failed: q.saga.payment-failed
+      
+
 springdoc:
   api-docs:
     enabled: true

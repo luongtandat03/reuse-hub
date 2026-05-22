@@ -17,6 +17,18 @@ spring:
     username: sa
     password: ""
     
+jwt:
+    expiryDay: dummy_value
+    expiryMinutes: dummy_value
+    refreshKey: dummy_value
+    accessKey: dummy_value
+
+feign:
+  client:
+    config:
+      profile-service:
+        url: "${PROFILE_SERVICE_URL:http://localhost:8082}/profile-feign"
+
 springdoc:
   api-docs:
     enabled: true
