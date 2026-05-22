@@ -21,10 +21,10 @@ import vn.tphcm.paymentservice.commons.PaymentStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tbl_payments", indexes = {
-    @Index(name = "idx_stripe_payment_intent_id", columnList = "stripe_payment_intent_id"),
-    @Index(name = "idx_linked_transaction_id", columnList = "linkedTransactionId"),
-    @Index(name = "idx_user_id_status", columnList = "user_id, status"),
-    @Index(name = "idx_created_at", columnList = "created_at")
+        @Index(name = "idx_stripe_payment_intent_id", columnList = "stripe_payment_intent_id"),
+        @Index(name = "idx_linked_transaction_id", columnList = "linkedTransactionId"),
+        @Index(name = "idx_user_id_status", columnList = "user_id, status"),
+        @Index(name = "idx_created_at", columnList = "created_at")
 })
 @Entity
 @Builder

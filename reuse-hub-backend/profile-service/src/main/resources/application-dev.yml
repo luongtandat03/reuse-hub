@@ -46,10 +46,10 @@ spring:
         default-requeue-rejected: false # if false, message will be sent to dead-letter queue
 
 supabase:
-  url: ${SUPABASE_URL_PROFILE}
-  service-key: ${SUPABASE_KEY_PROFILE}
-  bucket: ${SUPABASE_BUCKET:upload-images}
-  public-url: ${SUPABASE_PUBLIC_URL_PROFILE}
+  url: ${SUPABASE_URL}
+  service-key: ${SUPABASE_SERVICE_KEY}
+  bucket: ${SUPABASE_BUCKET}
+  public-url: ${SUPABASE_PUBLIC_URL}
 
 file:
   upload:

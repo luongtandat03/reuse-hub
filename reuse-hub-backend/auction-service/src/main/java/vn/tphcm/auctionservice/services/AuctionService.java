@@ -20,5 +20,5 @@ public interface AuctionService {
 
     ApiResponse<Void> placeBid(BidRequest request);
 
-    void processClosedAuction()
+    void processClosedAuction();
 }

@@ -43,7 +43,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-        </dependencies>
+    </dependencies>
     </dependencyManagement>
     <dependencies>
         <!-- JPA -->
@@ -149,6 +149,12 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
+            <!-- H2 Database-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
@@ -216,3 +222,4 @@
     </build>
 
 </project>
+

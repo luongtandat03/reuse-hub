@@ -47,7 +47,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-        </dependencies>
+    </dependencies>
     </dependencyManagement>
     <dependencies>
         <!-- Database -->
@@ -173,6 +173,12 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
+            <!-- H2 Database-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
@@ -239,3 +245,4 @@
         </plugins>
     </build>
 </project>
+

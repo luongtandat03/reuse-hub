@@ -18,6 +18,7 @@ spec:
       containers:
         - name: admin-service
           image: luongtandat512/admin-service:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8090
           envFrom:
