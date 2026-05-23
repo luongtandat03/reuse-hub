@@ -18,10 +18,11 @@ spring:
     password: ""
     
 websocket:
-  user-destination-prefix: dummy_value
   allow-origin: dummy_value
   application-prefix: dummy_value
   destination-prefix: dummy_value
+  endpoint: /ws
+
 rabbitmq:
   exchanges:
     bid-exchange: dummy_value
@@ -31,12 +32,6 @@ rabbitmq:
     notification-exchange: dummy_value
   queues:
     notification-queue: dummy_value
-openapi:
-  service:
-    api-docs: dummy_value
-websocket:
-  endpoint: dummy_value
-
 springdoc:
   api-docs:
     enabled: true
