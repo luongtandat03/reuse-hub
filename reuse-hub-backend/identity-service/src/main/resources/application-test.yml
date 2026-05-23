@@ -19,8 +19,8 @@ spring:
 
     
 jwt:  
-    expiryDay: dummy_value
-    expiryMinutes: dummy_value
+    expiryDay: 7
+    expiryMinutes: 10080
     refreshKey: dummy_value
     accessKey: dummy_value
 

@@ -26,10 +26,9 @@ websocket:
 rabbitmq:
   exchanges:
     bid-exchange: dummy_value
+    notification-exchange: dummy_value
   routing-keys:
     notification: dummy_value
-  exchanges:
-    notification-exchange: dummy_value
   queues:
     notification-queue: dummy_value
 springdoc:
