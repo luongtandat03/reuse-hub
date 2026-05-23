@@ -4,7 +4,7 @@ spring:
       on-profile: test
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/item
+    url: jdbc:postgresql://localhost:5432/transaction
     username: postgres
     password: postgres
 

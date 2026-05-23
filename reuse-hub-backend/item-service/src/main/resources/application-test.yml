@@ -19,10 +19,10 @@ spring:
           dialect: org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect
 
 supabase:
-  url: ${SUPABASE_URL}
-  service-key: ${SUPABASE_SERVICE_KEY}
-  bucket: ${SUPABASE_BUCKET}
-  public-url: ${SUPABASE_PUBLIC_URL}
+  url: dummy_value
+  service-key: dummy_value  
+  bucket: dummy_value
+  public-url: dummy_value
 
 file:
   upload:
